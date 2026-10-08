@@ -1,0 +1,460 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Happy Birthday Halima 💗</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+
+    background: linear-gradient(
+        135deg,
+        #ffffff 0%,
+        #fff5f9 50%,
+        #ffe6f0 100%
+    );
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+    color: #d86f9b;
+}
+
+.container {
+    width: 92%;
+    max-width: 900px;
+    padding: 30px;
+}
+
+/* COUNTDOWN */
+
+#countdownScreen h1 {
+    font-size: 45px;
+    margin-bottom: 35px;
+    color: #d86f9b;
+}
+
+#countdown {
+    font-size: 80px;
+    font-weight: bold;
+    letter-spacing: 4px;
+    color: #c95f8d;
+
+    text-shadow:
+        0 4px 15px rgba(200, 100, 150, 0.15);
+}
+
+/* BIRTHDAY MESSAGE */
+
+#birthday {
+    display: none;
+    animation: appear 1.5s ease;
+}
+
+#birthday h1 {
+    font-size: 45px;
+    margin-bottom: 25px;
+    color: #d86f9b;
+}
+
+.message {
+    font-size: 21px;
+    line-height: 1.7;
+
+    color: #555;
+
+    background: rgba(255,255,255,0.8);
+
+    padding: 28px;
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 10px 35px rgba(220,120,160,0.15);
+}
+
+.heart {
+    font-size: 32px;
+    margin-top: 20px;
+}
+
+/* MESSAGE APPEAR ANIMATION */
+
+@keyframes appear {
+
+    from {
+        opacity: 0;
+        transform: scale(0.75);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+}
+
+/* CONFETTI */
+
+.confetti {
+
+    position: fixed;
+
+    top: -30px;
+
+    width: 10px;
+    height: 16px;
+
+    animation: fall linear forwards;
+
+    z-index: 10;
+
+}
+
+@keyframes fall {
+
+    to {
+        transform:
+            translateY(110vh)
+            rotate(720deg);
+    }
+
+}
+
+/* PHONE SCREEN */
+
+@media (max-width: 600px) {
+
+    #countdownScreen h1 {
+        font-size: 32px;
+    }
+
+    #countdown {
+        font-size: 45px;
+        letter-spacing: 2px;
+    }
+
+    #birthday h1 {
+        font-size: 32px;
+    }
+
+    .message {
+        font-size: 18px;
+        padding: 22px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- COUNTDOWN SCREEN -->
+
+    <div id="countdownScreen">
+
+        <h1>
+            Halima's Birthday 💗
+        </h1>
+
+        <div id="countdown">
+            Loading...
+        </div>
+
+    </div>
+
+
+    <!-- BIRTHDAY SCREEN -->
+
+    <div id="birthday">
+
+        <h1>
+            Happy Birthday Halima! 🎂💗
+        </h1>
+
+        <div class="message">
+
+            Idk what to say but your accutally the best
+            most trustworthy kind person ive ever met
+            and will ever meet.
+
+            <br><br>
+
+            I dont want to make this long but I hope u see this
+            and I wish u a happy bday..67
+
+        </div>
+
+        <div class="heart">
+            🤍🌸💗
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/*
+    OCTOBER 9 AT EXACTLY 12:00 AM
+*/
+
+function getBirthdayDate() {
+
+    const now = new Date();
+
+    let year = now.getFullYear();
+
+    let birthday =
+        new Date(year, 9, 9, 0, 0, 0);
+
+    /*
+        If October 9 has already passed,
+        use October 9 of the next year.
+    */
+
+    if (now >= birthday) {
+
+        birthday =
+            new Date(year + 1, 9, 9, 0, 0, 0);
+
+    }
+
+    return birthday;
+}
+
+
+let birthdayDate = getBirthdayDate();
+
+
+/*
+    UPDATE COUNTDOWN
+*/
+
+function updateCountdown() {
+
+    const now = new Date();
+
+    const difference =
+        birthdayDate - now;
+
+
+    /*
+        When the countdown reaches zero
+    */
+
+    if (difference <= 0) {
+
+        showBirthday();
+
+        return;
+
+    }
+
+
+    const days =
+        Math.floor(
+            difference /
+            (1000 * 60 * 60 * 24)
+        );
+
+
+    const hours =
+        Math.floor(
+            (difference /
+            (1000 * 60 * 60)) % 24
+        );
+
+
+    const minutes =
+        Math.floor(
+            (difference /
+            (1000 * 60)) % 60
+        );
+
+
+    const seconds =
+        Math.floor(
+            (difference /
+            1000) % 60
+        );
+
+
+    document.getElementById("countdown").innerHTML =
+
+        days + "d " +
+
+        String(hours).padStart(2, "0")
+        + "h " +
+
+        String(minutes).padStart(2, "0")
+        + "m " +
+
+        String(seconds).padStart(2, "0")
+        + "s";
+
+}
+
+
+/*
+    SHOW BIRTHDAY
+*/
+
+let birthdayShown = false;
+
+function showBirthday() {
+
+    if (birthdayShown) return;
+
+    birthdayShown = true;
+
+
+    document.getElementById(
+        "countdownScreen"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "birthday"
+    ).style.display = "block";
+
+
+    /*
+        BIG FIRST BURST OF CONFETTI
+    */
+
+    for (let i = 0; i < 200; i++) {
+
+        createConfetti();
+
+    }
+
+
+    /*
+        CONTINUOUS CONFETTI RAIN
+    */
+
+    setInterval(function() {
+
+        for (let i = 0; i < 18; i++) {
+
+            createConfetti();
+
+        }
+
+    }, 700);
+
+}
+
+
+/*
+    CREATE CONFETTI
+*/
+
+function createConfetti() {
+
+    const confetti =
+        document.createElement("div");
+
+
+    confetti.classList.add(
+        "confetti"
+    );
+
+
+    const colors = [
+
+        "#ff9fc5",
+        "#ffc7dc",
+        "#f783ac",
+        "#ffffff",
+        "#ffd6e7",
+        "#f5a6c7"
+
+    ];
+
+
+    confetti.style.background =
+        colors[
+            Math.floor(
+                Math.random() *
+                colors.length
+            )
+        ];
+
+
+    confetti.style.left =
+        Math.random() * 100 + "vw";
+
+
+    confetti.style.width =
+        (Math.random() * 8 + 6) + "px";
+
+
+    confetti.style.height =
+        (Math.random() * 12 + 8) + "px";
+
+
+    confetti.style.animationDuration =
+        (Math.random() * 3 + 3) + "s";
+
+
+    confetti.style.animationDelay =
+        Math.random() * 1.5 + "s";
+
+
+    confetti.style.transform =
+        "rotate(" +
+        Math.random() * 360 +
+        "deg)";
+
+
+    document.body.appendChild(
+        confetti
+    );
+
+
+    setTimeout(function() {
+
+        confetti.remove();
+
+    }, 7000);
+
+}
+
+
+/*
+    START
+*/
+
+updateCountdown();
+
+setInterval(
+    updateCountdown,
+    1000
+);
+
+</script>
+
+</body>
+</html>
+```
